@@ -317,66 +317,77 @@ export async function TaskDetailPage({ task, slug }: { task: TaskKey; slug: stri
                   </div>
                 ) : null}
 
-                <Card className={cn(isClassified ? "mx-auto w-full max-w-4xl" : "mt-6")}>
-                  <CardContent className="p-6">
+                <Card className={cn(
+                  "overflow-hidden border-0 shadow-lg",
+                  isClassified ? "mx-auto w-full max-w-4xl" : "mt-6"
+                )}>
+                  <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 border-b">
                     <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
-                      <Badge variant="secondary" className="inline-flex items-center gap-1">
+                      <Badge variant="secondary" className="inline-flex items-center gap-1 bg-white/80 backdrop-blur-sm">
                         <Tag className="h-3.5 w-3.5" />
                         {category}
                       </Badge>
                       {location && (
-                        <span className="inline-flex items-center gap-1">
+                        <span className="inline-flex items-center gap-1 bg-white/60 px-3 py-1 rounded-full">
                           <MapPin className="h-4 w-4" />
                           {location}
                         </span>
                       )}
                     </div>
-                    <h1 className="mt-4 text-3xl font-semibold text-foreground">{post.title}</h1>
-                    <RichContent html={descriptionHtml} className="mt-3 max-w-3xl" />
+                    <h1 className="mt-4 text-3xl font-bold text-foreground leading-tight">{post.title}</h1>
+                  </div>
+                  <CardContent className="p-6">
+                    <div className="prose prose-gray max-w-none">
+                      <RichContent html={descriptionHtml} className="text-base leading-7" />
+                    </div>
                   </CardContent>
                 </Card>
               </>
             ) : null}
 
             {isClassified ? (
-              <Card className="mx-auto w-full max-w-4xl">
+              <Card className="mx-auto w-full max-w-4xl overflow-hidden border-0 shadow-lg">
+                <div className="bg-gradient-to-r from-emerald-50 to-teal-50 p-6 border-b">
+                  <h2 className="text-xl font-semibold text-foreground">Business details</h2>
+                </div>
                 <CardContent className="p-6">
-                  <h2 className="text-lg font-semibold text-foreground">Business details</h2>
-                  <div className="mt-4 space-y-3 text-sm text-muted-foreground">
+                  <div className="grid gap-4">
                     {content.website && (
-                      <div className="flex items-start gap-2">
-                        <Globe className="mt-0.5 h-4 w-4" />
-                        <a
-                          href={content.website}
-                          className="break-all text-foreground hover:underline"
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          {content.website}
-                        </a>
+                      <div className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg">
+                        <Globe className="mt-0.5 h-5 w-5 text-blue-600" />
+                        <div className="flex-1">
+                          <a
+                            href={content.website}
+                            className="break-all text-foreground hover:text-blue-600 hover:underline font-medium"
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            {content.website}
+                          </a>
+                        </div>
                       </div>
                     )}
                     {content.phone && (
-                      <div className="flex items-start gap-2">
-                        <Phone className="mt-0.5 h-4 w-4" />
-                        <span>{content.phone}</span>
+                      <div className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg">
+                        <Phone className="mt-0.5 h-5 w-5 text-green-600" />
+                        <span className="font-medium">{content.phone}</span>
                       </div>
                     )}
                     {content.email && (
-                      <div className="flex items-start gap-2">
-                        <Mail className="mt-0.5 h-4 w-4" />
+                      <div className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg">
+                        <Mail className="mt-0.5 h-5 w-5 text-purple-600" />
                         <a
                           href={`mailto:${content.email}`}
-                          className="break-all text-foreground hover:underline"
+                          className="break-all text-foreground hover:text-purple-600 hover:underline font-medium"
                         >
                           {content.email}
                         </a>
                       </div>
                     )}
                     {location && (
-                      <div className="flex items-start gap-2">
-                        <MapPin className="mt-0.5 h-4 w-4" />
-                        <span>{location}</span>
+                      <div className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg">
+                        <MapPin className="mt-0.5 h-5 w-5 text-red-600" />
+                        <span className="font-medium">{location}</span>
                       </div>
                     )}
                   </div>
@@ -385,27 +396,39 @@ export async function TaskDetailPage({ task, slug }: { task: TaskKey; slug: stri
             ) : null}
 
             {content.highlights?.length && !isArticle ? (
-              <Card className={cn("mt-8", isClassified ? "mx-auto w-full max-w-4xl" : "")}>
+              <Card className={cn(
+                "mt-8 overflow-hidden border-0 shadow-lg",
+                isClassified ? "mx-auto w-full max-w-4xl" : ""
+              )}>
+                <div className="bg-gradient-to-r from-amber-50 to-orange-50 p-6 border-b">
+                  <h2 className="text-xl font-semibold text-foreground">Highlights</h2>
+                </div>
                 <CardContent className="p-6">
-                  <h2 className="text-lg font-semibold text-foreground">Highlights</h2>
-                  <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-                    {content.highlights.map((item) => (
-                      <li key={item}>• {item}</li>
+                  <div className="grid gap-3">
+                    {content.highlights.map((item, index) => (
+                      <div key={item} className="flex items-start gap-3 p-3 bg-amber-50/50 rounded-lg border border-amber-100">
+                        <div className="flex-shrink-0 w-6 h-6 bg-amber-200 rounded-full flex items-center justify-center text-xs font-semibold text-amber-800 mt-0.5">
+                          {index + 1}
+                        </div>
+                        <span className="text-sm font-medium text-gray-700 leading-relaxed">{item}</span>
+                      </div>
                     ))}
-                  </ul>
+                  </div>
                 </CardContent>
               </Card>
             ) : null}
 
             {isClassified && mapEmbedUrl ? (
-              <Card className="mx-auto w-full max-w-4xl">
+              <Card className="mx-auto w-full max-w-4xl overflow-hidden border-0 shadow-lg">
+                <div className="bg-gradient-to-r from-green-50 to-emerald-50 p-6 border-b">
+                  <h2 className="text-xl font-semibold text-foreground">Location map</h2>
+                </div>
                 <CardContent className="p-4">
-                  <p className="text-sm font-semibold text-foreground">Location map</p>
-                  <div className="mt-4 overflow-hidden rounded-xl border border-border">
+                  <div className="overflow-hidden rounded-xl border border-gray-200 shadow-sm">
                     <iframe
                       title="Business location map"
                       src={mapEmbedUrl}
-                      className="h-56 w-full"
+                      className="h-64 w-full"
                       loading="lazy"
                     />
                   </div>
@@ -490,41 +513,49 @@ export async function TaskDetailPage({ task, slug }: { task: TaskKey; slug: stri
 
         <section className="mt-12">
           {related.length ? (
-            <>
-            <div className="mb-4 flex items-center justify-between">
-              <h2 className="text-xl font-semibold text-foreground">
-                More in {category}
-              </h2>
-              {taskConfig?.route && (
-                <Link
-                  href={taskConfig.route}
-                  className="text-sm text-muted-foreground hover:text-foreground"
-                >
-                  View all
-                </Link>
-              )}
-            </div>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {related.map((item) => (
-                <TaskPostCard
-                  key={item.id}
-                  post={item}
-                  href={buildPostUrl(task, item.slug)}
-                />
-              ))}
-            </div>
-            </>
+            <Card className="overflow-hidden border-0 shadow-lg">
+              <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-6 border-b">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-xl font-semibold text-foreground">
+                    More in {category}
+                  </h2>
+                  {taskConfig?.route && (
+                    <Link
+                      href={taskConfig.route}
+                      className="text-sm text-purple-600 hover:text-purple-700 font-medium"
+                    >
+                      View all →
+                    </Link>
+                  )}
+                </div>
+              </div>
+              <CardContent className="p-6">
+                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                  {related.map((item) => (
+                    <TaskPostCard
+                      key={item.id}
+                      post={item}
+                      href={buildPostUrl(task, item.slug)}
+                    />
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
           ) : null}
-          <Card className="mt-6 border-border bg-card/60">
-            <CardContent className="p-4">
-              <p className="text-sm font-semibold text-foreground">Related links</p>
-              <ul className="mt-2 space-y-2 text-sm">
+          
+          <Card className="mt-6 overflow-hidden border-0 shadow-lg">
+            <div className="bg-gradient-to-r from-gray-50 to-slate-50 p-6 border-b">
+              <h2 className="text-lg font-semibold text-foreground">Related links</h2>
+            </div>
+            <CardContent className="p-6">
+              <ul className="space-y-3">
                 {related.map((item) => (
                   <li key={`link-${item.id}`}>
                     <Link
                       href={buildPostUrl(task, item.slug)}
-                      className="text-primary underline-offset-4 hover:underline"
+                      className="flex items-center gap-2 text-gray-700 hover:text-blue-600 hover:underline underline-offset-4 transition-colors"
                     >
+                      <div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
                       {item.title}
                     </Link>
                   </li>
@@ -533,21 +564,14 @@ export async function TaskDetailPage({ task, slug }: { task: TaskKey; slug: stri
                   <li>
                     <Link
                       href={taskConfig.route}
-                      className="text-primary underline-offset-4 hover:underline"
+                      className="flex items-center gap-2 text-gray-700 hover:text-blue-600 hover:underline underline-offset-4 transition-colors"
                     >
+                      <div className="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
                       Browse all {taskConfig.label}
                     </Link>
                   </li>
                 ) : null}
-                <li>
-                  <Link
-                    href={`/search?q=${encodeURIComponent(category)}`}
-                    className="text-primary underline-offset-4 hover:underline"
-                  >
-                    Search more in {category}
-                  </Link>
-                </li>
-              </ul>
+                              </ul>
             </CardContent>
           </Card>
         </section>
