@@ -20,6 +20,35 @@ const nextConfig = {
   turbopack: {
     root: __dirname,
   },
+
+  async redirects() {
+    return [
+      {
+        source: '/users',
+        destination: '/user',
+        permanent: true,
+      },
+      {
+        source: '/users/:slug*',
+        destination: '/user/:slug*',
+        permanent: true,
+      },
+    ];
+  },
+
+  async rewrites() {
+    return [
+      {
+        source: '/user',
+        destination: '/profile',
+      },
+      {
+        source: '/user/:slug*',
+        destination: '/profile/:slug*',
+      },
+    ];
+  },
+
   async headers() {
     return [
       {
@@ -59,6 +88,7 @@ const nextConfig = {
       },
     ];
   },
+
 }
 
 export default nextConfig
