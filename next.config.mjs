@@ -52,16 +52,6 @@ const nextConfig = {
   async headers() {
     return [
       {
-        source: '/users',
-        destination: '/user',
-        permanent: true,
-      },
-      {
-        source: '/users/:slug*',
-        destination: '/user/:slug*',
-        permanent: true,
-      },
-      {
         source: "/(.*)",
         headers: [
           { key: "X-Content-Type-Options", value: "nosniff" },
